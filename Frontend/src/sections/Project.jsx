@@ -10,7 +10,7 @@ function Projects() {
 
   useEffect(() => {
     // 🚨 Your live Render Backend URL for the API endpoint
-    const BACKEND_URL = "https://portfolio-backend-dvf9.onrender.com";
+    const BACKEND_URL = "https://portfolio-1-vqia.onrender.com";
 
     fetch(`${BACKEND_URL}/api/projects`)
       .then(res => {
