@@ -17,6 +17,16 @@
 }
 
 
+
+/* project.css */
+
+/* 🚨 FIX: Remove this height property if it exists 🚨 */
 #projects {
-  height: 100vh;
+  /* height: 100vh; */ /* DELETE THIS LINE */
+  
+  /* Use padding for proper vertical spacing instead */
+  padding-top: 50px; 
+  padding-bottom: 50px;
 }
+
+/* ... rest of your styles ... */
