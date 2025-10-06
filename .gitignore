@@ -10,4 +10,4 @@ node_modules
 /dist
 
 # OS files
-.DS_Store
+.DS_Storegit commit -m "Initial portfolio commit: Frontend and Backend structure ready"

@@ -3,25 +3,31 @@
 import React from "react";
 import "./Contact.css";
 
+// 🚨 Access the environment variable here
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT; 
+
 function Contact() {
-  // ⚠️ Note: No state or custom handleSubmit function is needed. 
-  // The form uses native HTML action/method for direct submission to Formspree.
+  // Check if the endpoint is available (good for debugging)
+  if (!FORMSPREE_ENDPOINT) {
+    console.error("VITE_FORMSPREE_ENDPOINT is not set!");
+    return <section id="contact" className="py-5 text-center">
+      <div className="container pt-5">
+        <p className="text-danger fw-bold">Contact form error: Configuration missing.</p>
+      </div>
+    </section>;
+  }
 
   return (
     <section id="contact" className="py-5 text-center">
       <div className="container pt-5">
         <h2 className="fw-bold text-primary mb-4">Contact Me</h2>
-        <p className="text-muted mb-5">
-          I’d love to connect! Whether you have a question, a project idea, or
-          just want to say hi — feel free to reach out.
-        </p>
+        {/* ... (rest of the header text) ... */}
 
         <div className="row justify-content-center">
           <div className="col-md-8 col-lg-6">
             <form
-              // 🚨 This is your Formspree endpoint. The data will be sent here, 
-              // and Formspree will forward it to your registered email.
-              action="https://formspree.io/f/mblzkbld" 
+              // 🚨 USE THE JAVASCRIPT VARIABLE HERE
+              action={FORMSPREE_ENDPOINT} 
               method="POST"
               className="p-4 rounded shadow-sm bg-white text-start"
             >
@@ -46,7 +52,7 @@ function Contact() {
                   type="email"
                   className="form-control"
                   id="email"
-                  name="_replyto" // Using '_replyto' allows you to reply directly to the sender's email.
+                  name="_replyto" 
                   placeholder="Enter your email"
                   required
                 />
