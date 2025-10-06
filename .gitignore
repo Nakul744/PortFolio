@@ -1,0 +1,13 @@
+# Dependencies (Ignores node_modules in root and subfolders)
+node_modules
+/Backend/node_modules
+
+# Sensitive Data (Crucial for Twilio credentials)
+**/.env
+
+# Build outputs (Common React/JS build directories)
+/build
+/dist
+
+# OS files
+.DS_Store

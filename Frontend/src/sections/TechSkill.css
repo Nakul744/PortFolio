@@ -1,0 +1,27 @@
+
+
+.skill-card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.skill-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+#skills h2 {
+  letter-spacing: 1px;
+}
+
+.card-body {
+  padding-bottom: 1.5rem;
+}
+
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.skill-card:hover .card-img-top {
+  transform: scale(1.1);
+}

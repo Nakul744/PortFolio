@@ -1,0 +1,22 @@
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+
+#projects {
+  height: 100vh;
+}

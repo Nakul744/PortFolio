@@ -1,0 +1,17 @@
+form {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+#contact i {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#contact i:hover {
+  color: #0d6efd;
+  transform: scale(1.2);
+}
