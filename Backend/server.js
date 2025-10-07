@@ -1,5 +1,4 @@
 // portfolio-backend/server.js
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -11,11 +10,20 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-const VERCEL_FRONTEND_URL = "https://port-folio-x4e1.vercel.app"; 
+const allowedOrigins = [
+    process.env.VERCEL_FRONTEND_URL,
+    'http://localhost:5173', // Add your local dev URL
+    // Add your deployed Render frontend URL if applicable (e.g., 'https://my-portfolio-frontend.onrender.com')
+];
 
-// FIX: Explicitly set CORS to ONLY allow your Vercel domain to access the API
 app.use(cors({
-    origin: VERCEL_FRONTEND_URL,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
 }));
@@ -45,6 +53,13 @@ const projectSchema = new mongoose.Schema({
     demoLink: String,
     githubLink: String,
 });
+const SkillsSchema = new mongoose.Schema({
+    name:String,
+    description:String,
+    image:String
+});
+
+const skills = mongoose.model('skills', SkillsSchema, 'skills');
 
 // The model name is 'Project', and it uses the 'projects' collection in Atlas.
 const Project = mongoose.model('Project', projectSchema, 'projects'); 
@@ -59,6 +74,18 @@ app.get('/api/projects', async (req, res) => {
     } catch (err) {
         console.error('Error fetching projects from DB:', err.message);
         res.status(500).json({ message: 'Failed to retrieve projects from database.' });
+    }
+});
+
+app.get("/api/skills", async (req, res) => {
+    try {
+        const skill = await skills.find();
+        res.status(200).json(skill);
+    } 
+    catch (err) {
+        console.error('Error fetching skills from Db:', err.message);
+        // 🛠️ FIX: Send a 500 status response back to the client
+        res.status(500).json({ message: 'Failed to retrieve skills from database.' });
     }
 });
 

@@ -10,20 +10,20 @@ function Projects() {
 
   useEffect(() => {
     // 🚨 Your live Render Backend URL for the API endpoint
-    const BACKEND_URL = "https://portfolio-1-vqia.onrender.com";
-
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", BACKEND_URL); 
     fetch(`${BACKEND_URL}/api/projects`)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) {
-            throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setProjects(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Failed to fetch projects:", err);
         setError("Failed to load projects. Please check the API connection.");
         setLoading(false);
@@ -60,7 +60,10 @@ function Projects() {
         <h2 className="fw-bold mb-5 pb-5 text-primary">Projects</h2>
         <div className="row g-4">
           {projects.map((project) => (
-            <div key={project._id} className="col-12 col-sm-6 col-md-6 col-lg-4">
+            <div
+              key={project._id}
+              className="col-12 col-sm-6 col-md-6 col-lg-4"
+            >
               <div className="card border-0 shadow-sm h-100 project-card d-flex flex-column">
                 <img
                   src={project.image}

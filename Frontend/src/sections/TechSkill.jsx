@@ -1,70 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TechSkill.css";
 
 function TechSkill() {
-  const skills = [
-    {
-      name: "HTML5",
-      description: "Building structured and semantic web pages.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-    },
-    {
-      name: "CSS3",
-      description: "Creating responsive and modern UI designs.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-    },
-    {
-      name: "JavaScript",
-      description: "Adding interactivity and logic to web apps.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-    },
-    {
-      name: "Java",
-      description: "Object-oriented programming and application development.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-    },
-    {
-      name: "React.js",
-      description: "Building dynamic and reusable front-end components.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    },
-    {
-      name: "Bootstrap",
-      description: "Designing mobile-first responsive layouts.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
-    },
-    {
-      name: "Tailwind CSS",
-      description: "Utility-first CSS framework for rapid UI development.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    },
-    {
-      name: "Node.js",
-      description: "Creating backend services and REST APIs.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-    },
-    {
-      name: "Express.js",
-      description: "Building server-side applications and APIs.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-    },
-    {
-      name: "MySQL",
-      description: "Managing relational databases and data.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-    },
-    {
-      name: "MongoDB",
-      description: "Working with NoSQL databases for data storage.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-    },
-    {
-      name: "Git & GitHub",
-      description: "Version control and collaborative development.",
-      image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-    },
-  ];
+  useEffect(() => {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", BACKEND_URL); 
+
+    fetch(`${BACKEND_URL}/api/skills`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("NetWork response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setSkills(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Failde to fetch skills:", err);
+        setError("Failed to load Skills Please Check The API Connection");
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="skills" className="py-5 text-center">
+        <div className="container pt-5">
+          <h2 className="fw-bold mb-5 pb-3 text-primary">Technical Skills</h2>
+          <p className="lead text-muted">Loading Skills... 🌐</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="skills" className="py-5 text-center">
+        <div className="container pt-5">
+          <h2 className="fw-bold mb-5 pb-5 text-danger"> Technical Skills</h2>
+          <p className="lead text-danger">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="skills" className="py-5 text-center">
@@ -78,12 +62,14 @@ function TechSkill() {
                   src={skill.image}
                   className="card-img-top mx-auto mt-4"
                   alt={skill.name}
-                  style={{ width: "70px", height: "70px", objectFit: "contain" }}
+                  style={{
+                    width: "70px",
+                    height: "70px",
+                    objectFit: "contain",
+                  }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title fw-bold text-dark">
-                    {skill.name}
-                  </h5>
+                  <h5 className="card-title fw-bold text-dark">{skill.name}</h5>
                   <p className="card-text text-muted small">
                     {skill.description}
                   </p>
