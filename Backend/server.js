@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-const VERCEL_FRONTEND_URL = "https://port-folio-x4e1.vercel.app/"; 
+const VERCEL_FRONTEND_URL = "https://port-folio-x4e1.vercel.app"; 
 
 // FIX: Explicitly set CORS to ONLY allow your Vercel domain to access the API
 app.use(cors({
